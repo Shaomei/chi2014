@@ -1,0 +1,425 @@
+CHI 2014 Papers and Notes
+
+Reviews of submission #2483: "Visually Impaired Users on an Online Social
+Network"
+
+------------------------ Submission 2483, Review 4 ------------------------
+
+Reviewer:           primary
+
+Your Assessment of this Paper's Contribution to HCI
+
+   This paper presents as large-scale analysis of VoiceOver users on
+   Facebook, comparing such features as how and what they choose to share,
+   and the makeup of their networks.
+
+Overall Rating
+
+   3.5 . . . Between neutral and possibly accept 
+
+Expertise
+
+   4  (Expert )
+
+The Review
+
+
+The Meta-Review
+
+   This paper presents a large-scale analysis of blind users' social network
+   use. On the whole, reviewers found positive aspects of the paper. The
+   authors could strengthen their chances (and ultimately strengthen the
+   paper) by addressing the main following points in their rebuttal, and
+   ultimately in a final draft if it is accepted.
+
+   * problems with statistical analysis (R2)
+   * discussion and transparency around ethical concerns of detecting and
+   studying disabled users without consent (R2,R3)
+   * discussion of study limitations, i.e. this data is representative of
+   Facebook users who use VoiceOver, not blind people as a whole (and maybe
+   not even blind Facebook users as a whole)
+
+   The reviewers also mentioned other points that should be addressed if
+   there is space in the rebuttal (please refer to their individual
+   reviews).
+
+   My inclination now is to recommend a weak accept (although this can
+   always change post-rebuttal following a reviewer discussion and comments
+   by the second AC).
+
+
+------------------------ Submission 2483, Review 1 ------------------------
+
+Reviewer:           external
+
+Your Assessment of this Paper's Contribution to HCI
+
+   The major contribution of this paper is a massive-scale quantitative
+   analysis of the behavior of visually impaired users on social networks. 
+   It provides valuable information about the types of content produced by
+   visually impaired users and the structure of their social networks.
+
+Overall Rating
+
+   4.0 - Possibly Accept: I would argue for accepting this paper 
+
+Expertise
+
+   4  (Expert )
+
+The Review
+
+   --- Significance of Contribution & Originality ---
+
+   The large scale of data collected makes this paper very useful for
+   researchers examining the use of social networking sites among people
+   with disabilities.  These results go far above the accessibility
+   evaluations or survey responses in previous works.
+
+
+   The result that people with visual impairments are willing to talk openly
+   about their disabilities on social networks (despite possible fear of
+   stigmatization) was a particularly noteworthy result.  The methods of
+   identifying users with visual impairments through their screenreader use
+   and specific behaviors on Facebook also seem like a unique result.
+
+
+   --- Validity ---
+
+   I had some problems both with the design of the experiment, and with the
+   results presented in the paper.  For the experimental design, it’s
+   very, very unfortunate that you don’t have any information about the
+   demographics of the participants in the VoiceOver sample.  There’s no
+   way to tell if these users are totally blind or low-vision, or if they
+   lost their vision at birth or later in life.  While you do mention the
+   limitations of the study being based on younger people who are
+   screenreader users and are able to afford iPhones, I think you need to
+   expand this section to mention that you also don’t know the exact
+   details of the users’ disabilities, and that this sample may not
+   represent all types of visual impairments equally.
+
+   The biggest problem I had with the results was with the photograph
+   analysis.  First of all, nowhere in the paper does it state what
+   percentage of photographs actually had captions - if users are uploading
+   a large amount of photographs without captions, these may be more
+   “personal” photographs, and might get a different amount of feedback
+   than the app-generated photographs.  It doesn’t make sense to me to
+   include the app-generated photographs in the analysis of likes/comments
+   received for photographs.  There's also no analysis of the content of the
+   photographs - while I understand that this would require human analysis,
+   instead of the statistical methods used in the rest of the paper, it does
+   seem like it might have informed this section a bit better.
+
+   Later, you separate out the users who mentioned TapTapSee and call them
+   “a confident representation of blind or near-blind users”.  While I
+   agree that using TapTapSee is a reasonable way to guess at a person’s
+   disability status, I think this analysis of them as a representative
+   group of visually impaired people is misguided.  These users most likely
+   have some other specific qualities related to their use of the
+   application (early tech adopters?  lack of easily-recruited sighted
+   help?), and trying to imply that data from their group is somehow more
+   representative of visually impaired people than data from the general
+   VoiceOver sample is, doesn’t take that into account at all.
+
+   You also mention that data was collected about users’ actions for 3
+   weeks, and feedback to those actions within 1 week of being posted. 
+   However, you never state how many actions this actually amounts to (how
+   many status updates were there?  how many photos were posted?), so it’s
+   very hard to tell how much data was used in the analyses.
+
+
+   --- Relevant previous work ---
+
+   The related work seems comprehensive.  The only suggestion I can make is
+   to add a little more background on stigma effects in disability, so that
+   the later results that visually impaired users are willing to talk about
+   their disabilities does not seem like as much of an obvious result to
+   casual readers.
+
+
+   --- Presentation clarity ---
+
+   The paper is extremely well-written, and I thought the progression and
+   structure were all done very well.  However, there’s a number of typos
+   throughout the paper.  I’ve listed the ones I caught (denoted as
+   page:column:paragraph), but you’ll probably want to run it through a
+   spellchecker as well.  I didn’t factor these into the score, but just
+   mention them here to help your editing process.
+
+   - 1:1:2 - “Vision-impairement”
+   - 2:1:5 - “talkng”
+   - 2:2:3 - “recenlty”
+   - 3:1:3 - “Developped”
+   - 4:1:7 - “Figure ??”
+   - 4:2:1 - “siginificant”
+   - 5: figure 2 label, “statu”
+   - 5:1:1 - “colletion”
+   - 5:1:2 - “differece”
+   - 7:1:2 - “vision-imparied”
+   - 7:1:5 - “impairement”
+   - 7:1:6 - “Faecbook”
+   - 7:1:6 - “devolopment”
+   - 7:2:1 - “descreasing”
+   - 7:2:2 - “colleagus”
+   - 7:2:2 - “visiually”
+   - 8:2:3 - “charactristics”
+   - 9:1:1 - “perhpas”
+
+
+------------------------ Submission 2483, Review 2 ------------------------
+
+Reviewer:           external
+
+Your Assessment of this Paper's Contribution to HCI
+
+   The paper presents a user study with impressive sample size that
+   investigates how Facebook users who are visually impaired use the social
+   networking site, the content that they produce and consume, and the
+   structure of their social networks compared to users who are sighted. The
+   study compares Facebook usage of 50K visually impaired users and 160K
+   sighted users. Some of the findings from the paper regarding the data
+   consumption and sharing by users who are visually impaired are very
+   interesting and could potentially have a great impact on future research
+   and the design of future social networking experience. For example, the
+   findings about visually impaired users’ information seeking behavior
+   and the type of questions they ask on Facebook could inform the design of
+   novel friend-sourced solutions that answer questions about their
+   surroundings. Furthermore, the findings on the structure of users' social
+   networks could guide future research on impact of Facebook use on social
+   capital of users who are visually impaired.
+
+Overall Rating
+
+   2.5 . . . Between possibly reject and neutral 
+
+Expertise
+
+   2  (Passing Knowledge)
+
+The Review
+
+   The paper presents an analysis of data from a very large sample size
+   compared to most HCI studies. In addition to the impressive sample size,
+   the paper still does a good job of addressing issues of sample bias.
+   Attention to detail in addressing this bias could be an example to other
+   HCI studies. The research questions are well structured and motivated
+   with examples, and answers to these questions presented in the paper
+   further the knowledge on social network experience for users who are
+   visually impaired.
+
+   However, the main weakness of the paper is the statistical analysis of
+   data. On page 4, the analysis assumes normal distribution of different
+   count metrics. However, there is a strong possibility that this data is
+   not normally distributed. In fact, footnote 4 suggests that at least
+   question counts presented in Figure 2 are not normally distributed, by
+   saying that the median of all questions across the two groups was 0.
+   Therefore, running a normalcy test on this data would clarify this. A
+   bigger concern are claims of statistically significant differences
+   between the two groups based on the bar charts and error bars alone.
+   Although the figures do imply significance, the paper should still
+   present a formal statistical analysis of the data. If the data does turn
+   out to be normally distributed, then likely most appropriate test to run
+   here is a  MANOVA (considering the number of different independent
+   variables), with appropriate post-hoc tests and corrections. All tests in
+   the paper should also report effect size in addition to significance test
+   results. If the data is not normally distributed, other tests should be
+   considered, or alternatively, the paper should argue why different
+   parametric tests are robust enough to handle data that is not normally
+   distributed. Also, a discussion on difference in sample size between
+   groups should be accounted for and discussed.
+
+   Also, some statistical analysis is present in the later sections of the
+   paper (e.g., Network Size on page 7). However, here too it looks like the
+   data was not normally distributed (the mean and medians of the number of
+   friends across participants was quite different). Also, no effect size
+   was reported. 
+
+   There are also some clarity issues with the conclusions from the data in
+   the paper. A lot of answers to the questions about differences between
+   VoiceOver and iOS groups state that there are no visible differences.
+   However, this argument (that there is no difference) is very hard to
+   prove given standard statistical analysis tests. Also, some arguments
+   that claim difference between the groups are not clear. For example,
+   network density section suggests that there is a large difference between
+   densities of TapTapSee and other two groups. However, other than more
+   fluctuation between different friend numbers in the TapTapSee curve,
+   there is no clear evidence that TapTapSee users’ groups are denser.
+   This should be argued further. Also, in the "status updates” section on
+   page 6, the paper cites striking differences in the top 10 extracted
+   words between the groups. But the point of the extraction algorithm is to
+   find the most representative words that are different across the groups.
+   Therefore, this particular difference is expected. The abstract also
+   claims that there were changes in size of networks of visually impaired
+   users over some period of time, but it is not clear if this refers to the
+   two periods or the duration of each of the period (one month each). The
+   paper should also make it clear if changes in size of networks of
+   visually impaired users are a result of an intervention or not. Otherwise
+   such changes are expected, since people meet new people over time.
+
+   The dates of the study change in the paper (from June 15 to July 15,
+   2003, and from August 4 to August 25, 2013). It appears that these are
+   two different readings from the two user groups that are then compared to
+   find the differences in behavior between the two groups (and not over
+   these two periods of time). But this should be clarified. For example,
+   what was the reason for the two different readings? The “status
+   update” section on page 5 refers to the two time periods, but without
+   clarification. Longitudinal study is implied in the abstract, too, but it
+   does not appear that it refers to the two periods.
+
+   Other minor issues that should be easy to address in the next iteration
+   of the paper include: 
+
+   The motivation for the work is strong, but could be further streamlined
+   to make it easier for the reader. For example, the connection between
+   research question 2 on page 2 and the discussion in the paragraph just
+   following the question is not clear. It should be clarified how these
+   other user groups relate to the target population – people who are
+   visually impaired. Additionally, the introduction of the paper asks too
+   many rhetorical questions which impact the clarity, especially since most
+   of these questions are not answered directly in the paper.
+
+   It is not clear how the data was obtained. Were the participants aware of
+   the study and did they specifically apply for the study and gave their
+   consent? This should be clarified; otherwise the study might raise some
+   ethical questions.
+
+   How was the distribution of 50K visually impaired users and 160K sighted
+   users determined?
+
+   The paper would benefit from a discussion section which summarizes
+   findings of the study.  In particular, the overall impact of findings
+   from the study is not discussed. Also, impact of these findings on future
+   research or designs could strengthen the paper.
+
+   There are a few typos in the paper. For example, every “et al.” in
+   the paper is missing a dot. Figure 2 caption says “statu” instead of
+   “status”. A figure reference on page 4 is missing a number. On page
+   5, “token” should be “tokens”.
+
+   The paper presents a study of Facebook use by people who are visually
+   impaired with a very large sample of users. Some of the differences
+   between Facebook users who are visually impaired and users who are
+   sighted that the study found could have a significant impact on the
+   future research and design of social network experience for the visually
+   impaired users. However, the questions regarding statistical analysis and
+   conclusions from the data must be addressed prior to publication. My
+   score reflects these issues. However, there are no indications that the
+   recommended statistical analysis changes will impact the results, but the
+   onus is on the paper to show correct analysis and present those results.
+   Also, the conclusions can further be clarified. Therefore, I look forward
+   to the rebuttal of this paper.
+
+
+------------------------ Submission 2483, Review 3 ------------------------
+
+Reviewer:           external
+
+Your Assessment of this Paper's Contribution to HCI
+
+   This paper presents an analysis of Facebook use by an extremely large
+   sample of people with vision impairments, and compares the behavior of
+   sighted and visually impaired users.
+
+Overall Rating
+
+   4.0 - Possibly Accept: I would argue for accepting this paper 
+
+Expertise
+
+   4  (Expert )
+
+The Review
+
+   This is an exciting study, and I agree with the authors that this study
+   reaches beyond what is typically possible within the CHI community. This
+   study represents an extremely large sample of a minority population, and
+   explores data that is not typically accessible to the CHI community.
+
+   Overall, this paper is extremely interesting. The analysis is generally
+   clearly described, and the paper covers several aspects of blind
+   individuals' participation on Facebook: level of activity, content types
+   posted, terms used, photos shared, and attributes of the social network.
+
+   Regarding the linguistic analysis, the statement "It is striking to see
+   that all top 10 words by both metrics are all related to vision
+   disability" seems a bit hyperbolic -- it seems likely that any similarly
+   targeted sample (e.g. a sample from a specific region) would reveal terms
+   that are specific to that sample. However, I would be curious to know
+   what percentage of the VoiceOver sample uses these terms, and how often.
+
+   Overall, I am in favor of this paper getting into CHI. The insight of
+   detecting VoiceOver usage as a way to identify large numbers of blind
+   Facebook uses is a clever one, and this study covers numerous interesting
+   topics. This could be one of the first "big data accessibility" papers.
+   However, there are a few places in the current version of the paper where
+   the analysis may be a bit stretched: for example, the comments above
+   about the "striking" discussion of blindness related terms, the seemingly
+   arbitrary cutoff point for VoiceOver use at 3 times per month, and using
+   mentions of TapTapSee as a filter for severe visual impairments. These
+   issues (and some others noted below) seem like a stretch, and run counter
+   to the "big data" approach and the credibility it provides. Hopefully the
+   justification for these decisions (and other relevant background data)
+   can be surfaced in the rebuttal and resolved.
+
+   Finally, I'm not sure that it's a requirement for this paper, but it
+   would be helpful if the authors raised and discussed the issue of privacy
+   in this context. I assume that this data collection is in line with
+   Facebook TOS, but it seems like targeting a specific minority population
+   raises some ethical questions. I suspect that users in the sample may
+   have some vague ideas that Facebook may analyze their aggregate data, but
+   may not expect to be identified and analyzed based on an apparent
+   disability. Given that this paper is somewhat trailblazing in the context
+   of collecting big data about how people with disabilities use the
+   internet, it would be helpful for the authors to lead the discussion of
+   these issues.
+
+   Other comments:
+   - RQ1 seems complex and could probably be broken into two separate
+   questions (1: what blind people do on social networks, and 2: how their
+   activities differ from those of sighted people).
+   - Regarding privacy, Facebook gives users the opportunity to choose
+   whether certain demographic data (age, gender, etc) are shared publicly
+   or with friends only. The paper suggests that data was analyzed
+   regardless of these settings, but it would be good to make this explicit.
+   - One concern with filtering users by VoiceOver is that some sighted
+   people (such as accessibility consultants or app developers) may
+   frequently use VoiceOver on their devices. The cutoff of using VoiceOver
+   more than 3 times a month seems arbitrary without further data, and it
+   would be interesting to know the distribution -- for example, are there
+   many users who use VoiceOver and Facebook more than 3 times per month,
+   but for less than 50% of their visits to Facebook?
+   - I share similar concerns regarding using TapTapSee use as a filter for
+   "severely visually impaired" -- if only because the population of young,
+   techy people who use Facebook and VoiceOver are likely to download and
+   play around with TapTapSee even if they possess some vision.
+   - On p.4, the authors note that the sample is limited to iPhone users,
+   who are likely to be young and wealthy. The authors point out that this
+   sample misses those who are "under-privileged and un-equipped with
+   technologies" - this is an important point. However, it's worth noting
+   that there are multiple tiers of users who are not in this sample -- not
+   just the underprivileged, but likely many blind people who access
+   Facebook via PCs only.
+   - The paper from Brady et al. (citation 5) is referenced extensively in
+   the introduction, but is only mentioned in passing in related work. As
+   one of the few prior studies of blind people using online social
+   networking sites, I'm surprised it is not discussed more directly.
+   - p.6 "which makes sense since visually impaired users do listen to radio
+   programs much more than sighted users" -- this claim should be backed by
+   a citation.
+   - In the peachtree/tunein example, it's not clear what photo is actually
+   being shared, or where it is coming from. Did the users photograph
+   themselves listening to the radio? If possible, it might be helpful to
+   report where photos are coming from -- whether they are shared from other
+   pages, uploaded from the phone's camera roll, uploaded from a photo
+   taking app (e.g. instagram), uploaded from an accessibility app (e.g.
+   TapTapSee), etc. The authors hypothesize there are differences here --
+   digging a bit deeper and examining where these photos come from would
+   strengthen the paper.
+   - In several places, the authors suggest that data from this study could
+   be used to automatically identify blind users. To what end? I suspect
+   that there are good reasons to do this, but I'm not sure what the authors
+   have in mind here.
+   - The paper has a number of grammatical and spelling errors.
+
+
+

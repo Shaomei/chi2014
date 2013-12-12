@@ -1,0 +1,169 @@
+\begin{thebibliography}{10}
+
+\bibitem{backstrom2006}
+Backstrom, L., Huttenlocher, D., Kleinberg, J., and Lan, X.
+\newblock Group formation in large social networks: membership, growth, and
+  evolution.
+\newblock In {\em Proceedings of the 12th ACM SIGKDD international conference
+  on Knowledge discovery and data mining}, KDD '06, ACM (New York, NY, USA,
+  2006), 44--54.
+
+\bibitem{bigham2010}
+Bigham, J.~P., Jayant, R., Ji, H., Little, G., Millerγ, A., Miller, R.~C.,
+  Miller, R., Tatarowicz, A., White, Y., White, S., and Yeh, T.
+\newblock Vizwiz: Nearly real-time answers to visual questions.
+\newblock In {\em Proceedings of UIST'10} (2010).
+
+\bibitem{boyd2007}
+boyd, d.
+\newblock Why youth (heart) social network sites: The role of networked publics
+  in teenage social life.
+\newblock {\em MacArthur Foundation Series on Digital Learning – Youth,
+  Identity, and Digital Media Volume\/} (2007).
+
+\bibitem{brady2013chi}
+Brady, E., Morris, M.~R., Zhong, Y., White, S., and Bigham, J.~P.
+\newblock Visual challenges in the everyday lives of blind people.
+\newblock In {\em Proceedings of the SIGCHI Conference on Human Factors in
+  Computing Systems}, CHI '13, ACM (New York, NY, USA, 2013), 2117--2126.
+
+\bibitem{brady2013cscw}
+Brady, E.~L., Zhong, Y., Morris, M.~R., and Bigham, J.~P.
+\newblock Investigating the appropriateness of social network question asking
+  as a resource for blind users.
+\newblock In {\em Proceedings of the 2013 conference on Computer supported
+  cooperative work}, CSCW '13, ACM (New York, NY, USA, 2013), 1225--1236.
+
+\bibitem{burke2013}
+Burke, M., Adamic, L.~A., and Marciniak, K.
+\newblock Families on facebook.
+\newblock In {\em ICWSM} (2013).
+
+\bibitem{burke:2010}
+Burke, M., Kraut, R., and Williams, D.
+\newblock Social use of computer-mediated communication by adults on the autism
+  spectrum.
+\newblock In {\em Proceedings of the 2010 ACM conference on Computer supported
+  cooperative work}, CSCW '10, ACM (New York, NY, USA, 2010), 425--434.
+
+\bibitem{das2013}
+Das, S., and Kramer, A.
+\newblock Self-censorship on facebook.
+\newblock In {\em ICWSM} (2013).
+
+\bibitem{sociallyaware}
+Delaney, J., Salminen, N., and Lee, E.
+\newblock {Infographic: The Growing Impact of Social Media}.
+\newblock
+  \url{http://www.sociallyawareblog.com/2012/11/21/time-americans-spend-per-month-on-social-media-sites/}.
+
+\bibitem{FacebookTrend}
+2010 memology: Top status trennds of the year.
+\newblock \url{https://blog.facebook.com/blog.php?post=466369142130}.
+
+\bibitem{facts_about_blindness}
+Statistical facts about blindness in the united states (2011).
+\newblock \url{https://nfb.org/factsaboutblindnessintheus}.
+
+\bibitem{pew_seniors}
+FITZGERALD, B.~R.
+\newblock Report: 43\% of seniors on web use social media.
+\newblock {\em The Wall Street Journal\/} (8 2013).
+\newblock
+  \url{http://blogs.wsj.com/digits/2013/08/05/report-43-of-seniors-on-web-use-social-media}.
+
+\bibitem{Goolsby:2010}
+Goolsby, R.
+\newblock Social media as crisis platform: The future of community maps/crisis
+  maps.
+\newblock {\em ACM Trans. Intell. Syst. Technol. 1}, 1 (Oct. 2010), 7:1--7:11.
+
+\bibitem{jayant2011}
+Jayant, C., Ji, H., White, S., and Bigham, J.~P.
+\newblock Supporting blind photography.
+\newblock In {\em The proceedings of the 13th international ACM SIGACCESS
+  conference on Computers and accessibility}, ASSETS '11, ACM (New York, NY,
+  USA, 2011), 203--210.
+
+\bibitem{kleinberg2004}
+Kleinberg, J.
+\newblock Temporal dynamics of on-line information streams.
+\newblock In {\em Data Stream Management: Processing High-speed Data},
+  M.~Garofalakis, J.~Gehrke, and R.~Rastogi, Eds., Springer (2004).
+
+\bibitem{morris2014}
+Morris, M.~R.
+\newblock Social networking site use by mothers of young children.
+\newblock In {\em CSCW} (2014).
+
+\bibitem{paul2011}
+Paul, S.~A., Hong, L., and Chi, E.~H.
+\newblock Is twitter a good place for asking questions? a characterization
+  study.
+\newblock In {\em ICWSM}, L.~A. Adamic, R.~A. Baeza-Yates, and S.~Counts, Eds.,
+  The AAAI Press (2011).
+
+\bibitem{romero2011}
+Romero, D.~M., Meeder, B., and Kleinberg, J.
+\newblock Differences in the mechanics of information diffusion across topics:
+  idioms, political hashtags, and complex contagion on twitter.
+\newblock In {\em Proceedings of the 20th international conference on World
+  wide web}, WWW '11, ACM (New York, NY, USA, 2011), 695--704.
+
+\bibitem{tsaousides2011}
+Tsaousides, T., Matsuzawa, Y., and Lebowitz, M.
+\newblock Familiarity and prevalence of facebook use for social networking
+  among individuals with traumatic brain injury.
+\newblock {\em Brain Inj. 25}, 12 (2011), 1155--62.
+
+\bibitem{tunein_wiki}
+Wikipedia page about tunein.
+\newblock \url{http://en.wikipedia.org/wiki/TuneIn}.
+
+\bibitem{ugander2011}
+{Ugander}, J., {Karrer}, B., {Backstrom}, L., and {Marlow}, C.
+\newblock The anatomy of the facebook social graph, Nov. 2011.
+
+\bibitem{wai-aria}
+{Web Accessibility Initiative - Accessible Rich Internet Applications}.
+\newblock
+  \url{http://en.wikipedia.org/wiki/Web_Accessibility_Initiative#Accessible_Rich_Internet_Applications_.28WAI-ARIA.29}.
+
+\bibitem{weber2013}
+Weber, I., Garimella, V. R.~K., and Batayneh, A.
+\newblock Secular vs. islamist polarization in egypt on twitter, 2013.
+\newblock \url{http://www.qcri.com/app/media/1900}.
+
+\bibitem{taptapsee}
+Weiss, T.~C.
+\newblock Taptapsee camera app for visually impaired.
+\newblock {\em Disabled World\/} (5 2013).
+\newblock
+  \url{http://www.disabled-world.com/assistivedevices/apps/taptapsee.php}.
+
+\bibitem{wentz2011}
+Wentz, B., and Lazar, J.
+\newblock Are separate interfaces inherently unequal?: an evaluation with blind
+  users of the usability of two interfaces for a social networking platform.
+\newblock In {\em Proceedings of the 2011 iConference}, iConference '11, ACM
+  (New York, NY, USA, 2011), 91--97.
+
+\bibitem{who_report}
+World health organization report on :visual impairment and blindness, 2012.
+\newblock \url{http://www.who.int/mediacentre/factsheets/fs282/en/}.
+
+\bibitem{facebook_wiki}
+{Facebook}.
+\newblock \url{http://en.wikipedia.org/wiki/Facebook}.
+
+\bibitem{facebook_stat_wiki}
+{Facebook statistics}.
+\newblock \url{http://en.wikipedia.org/wiki/Facebook_statistics}.
+
+\bibitem{wu2011}
+Wu, S., Hofman, J.~M., Mason, W.~A., and Watts, D.~J.
+\newblock Who says what to whom on twitter.
+\newblock In {\em Proceedings of the 20th international conference on World
+  wide web}, WWW '11, ACM (New York, NY, USA, 2011), 705--714.
+
+\end{thebibliography}

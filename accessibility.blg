@@ -1,0 +1,73 @@
+This is BibTeX, Version 0.99d (TeX Live 2013)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: accessibility.aux
+The style file: acm-sigchi.bst
+Database file #1: accessibility.bib
+I was expecting a `,' or a `)'---line 21 of file accessibility.bib
+ : 
+ : }
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `)'---line 33 of file accessibility.bib
+ : 
+ : }
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `)'---line 45 of file accessibility.bib
+ : 
+ : }
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--entry type for "ugander2011" isn't style-file defined
+--line 413 of file accessibility.bib
+Warning--entry type for "FacebookTrend" isn't style-file defined
+--line 439 of file accessibility.bib
+Warning--entry type for "weber2013" isn't style-file defined
+--line 597 of file accessibility.bib
+I was expecting a `,' or a `)'---line 647 of file accessibility.bib
+ : 
+ : }
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You've used 29 entries,
+            2243 wiz_defined-function locations,
+            676 strings with 9098 characters,
+and the built_in function-call counts, 9219 in all, are:
+= -- 860
+> -- 408
+< -- 0
++ -- 170
+- -- 140
+* -- 594
+:= -- 1389
+add.period$ -- 81
+call.type$ -- 29
+change.case$ -- 161
+chr.to.int$ -- 0
+cite$ -- 29
+duplicate$ -- 398
+empty$ -- 845
+format.name$ -- 140
+if$ -- 2027
+int.to.chr$ -- 0
+int.to.str$ -- 29
+missing$ -- 19
+newline$ -- 142
+num.names$ -- 48
+pop$ -- 242
+preamble$ -- 1
+purify$ -- 132
+quote$ -- 0
+skip$ -- 287
+stack$ -- 0
+substring$ -- 451
+swap$ -- 93
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 116
+warning$ -- 0
+while$ -- 73
+width$ -- 31
+write$ -- 284
+(There were 4 error messages)
