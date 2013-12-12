@@ -1,0 +1,450 @@
+The local network structure of vision-impaired users
+========================================================
+
+Previous research suggested (cite Jeffrey Bigham) that vision-impaird people have a smaller, and denser social networks. We want to see whether this is true for vision-impaired users in Facebook.
+
+```{r}
+setwd("~/accessibility/paper")
+library(ggplot2)
+# Load new data
+sampled<-read.delim("all_sampled_users_20130715.tsv",sep="\t",header=FALSE,col.names=c("userid","type","country","age","gender","locale","friend_count","days_since_confirmed","fb_age","l7","l28","mobile_l7","mobile_l28","ds"))
+
+
+#fbmelt = melt(subset(fb,select=c(userid_random,friend_count,subscriber_count)),id.vars = 'userid_random')
+#ggplot(fbmelt,aes(x=value,group=variable,fill=variable)) + geom_density(alpha=0.3) + scale_x_log10() + theme_bw(20) +
+#  xlab("friend/subscriber count")
+
+str(sampled)
+sampled$friend_count_num<-as.integer(paste(sampled$friend_count))
+sampled$days_since_confirmed<-as.integer(paste(sampled$days_since_confirmed))
+sampled$age<-as.integer(paste(sampled$age))
+sampled$fb_age<-as.integer(paste(sampled$fb_age))
+sampled$user_type<-factor(sampled$type,levels(sampled$type)[c(3,1,5,4,2)])
+
+# add TapTapSee users
+tts<-read.delim("tts_users_20130715.tsv", sep="\t", header=FALSE, col.names=c("userid","type","country","locale","age","gender","friend_count","days_since_confirmed","fb_age","l7","l28","mobile_l7","mobile_l28","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"))
+tts$type<-as.factor(rep("TapTapSee",length(tts$type)))
+tts$ds<-as.factor(rep("2013-07-15",length(tts$userid)))
+tts$friend_count_num<-as.integer(paste(tts$friend_count))
+tts$user_type<-factor(tts$type)
+str(tts)
+
+tts_demo<-tts[,c("userid","type","country","age","gender","locale","friend_count","days_since_confirmed","fb_age","l7","l28","mobile_l7","mobile_l28","ds","friend_count_num","user_type")]
+sampled<-rbind(sampled,tts_demo)
+
+
+p.age<-ggplot(sampled, aes(x=user_type,y=age,group=user_type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(sampled$age, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.friend_count<-ggplot(sampled, aes(x=user_type,y=friend_count_num,group=user_type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(sampled$friend_count_num, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+ylab("friend count")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.days_since_confirmed<-ggplot(sampled, aes(x=user_type,y=days_since_confirmed,group=user_type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(sampled$days_since_confirmed, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.fb_age<-ggplot(sampled, aes(x=user_type,y=fb_age,group=user_type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(sampled$fb_age, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.l28<-ggplot(sampled, aes(x=user_type,y=l28,group=user_type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(sampled$l28, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+```
+
+Here are the distribution of some key properties of accessibiilty users and random sample of iOS/general FB users.
+
+```{r fig.width=7, fig.height=6}
+p.age
+```
+
+```{r fig.width=7, fig.height=6}
+p.days_since_confirmed
+```
+
+```{r fig.width=7, fig.height=6}
+p.fb_age
+```
+
+```{r fig.width=7, fig.height=6}
+p.l28
+```
+
+```{r fig.width=7, fig.height=6}
+p.friend_count
+```
+
+Demographics (for paper)
+
+```{r}
+top5_country<-c("US","GB","FR","DE","IT")
+vo_country<-table(sampled[sampled$user_type=='voice_over',]$country)[top5_country]/dim(sampled[sampled$user_type=='voice_over',])[1]
+ios_country<-table(sampled[sampled$user_type=='ios_sample',]$country)[top5_country]/dim(sampled[sampled$user_type=='ios_sample',])[1]
+
+top5_ios<-c("US","GB","JP","CA","DE")
+ios_country<-table(sampled[sampled$user_type=='ios_sample',]$country)[top5_ios]/dim(sampled[sampled$user_type=='ios_sample',])[1]
+
+sort(table(sampled[sampled$user_type=='ios_sample',]$country))
+
+```
+
+```{r}
+# age distribution
+groupbyage <- function(x) {
+  result<-"13-19" 
+  if (x>=20) {
+    result<-"20-29"
+  }
+  if (x>=30) {
+    result<-"30-39"
+  } 
+  if (x>=40) {
+    result<-"40-49"
+  } 
+  if (x>=50) {
+    result<-"50-59"
+  }
+  if (x>=60) {
+    result<-"60+"
+  }
+  return(result)
+}
+
+summary(sampled[sampled$user_type=='ios_sample' & sampled$age < 90,]$age)
+summary(sampled[sampled$user_type=='voice_over' & sampled$age < 90,]$age)
+
+summary(sampled[sampled$user_type=='ios_sample' & sampled$age < 90,]$age)
+summary(sampled[sampled$user_type=='voice_over' & sampled$age < 90,]$age)
+
+table(sampled[sampled$user_type=='ios_sample',]$gender)/dim(sampled[sampled$user_type=='ios_sample',])[1]*100
+table(sampled[sampled$user_type=='voice_over',]$gender)/dim(sampled[sampled$user_type=='voice_over',])[1]*100
+```
+
+
+It seems that vision impaired users do not necessarily have smaller social network. But can it be explained by how long they have been on facebook?
+
+But it's interesting to see that for TapTapSee users, although they are more engaged and have been using Facebook for a longer period of time, they do have a slightly lower number of friends as compared to random sample of iPhone users.
+
+```{r}
+# estimate (friend_count ~ months_since_confirmed)
+library(plyr)
+
+stats<-ddply(sampled[!is.na(sampled$friend_count_num),], .(user_type, months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+
+#stats
+
+```
+
+Here we bin users by the number of months since email(or sms?) confirmation, and plot the median and mean of friend count for users in each bucket. In the second plot, we also show the standard deviation for the average friend count in each bucket.
+
+```{r fig.width=7, fig.height=6}
+ggplot(stats, aes(x=months_since_confirmed, y=median, color=user_type))+geom_line()+ylab("median friend count")+xlim(0,84)+ylim(0,600)
+```
+
+```{r fig.width=7, fig.height=6}
+stats$label[stats$user_type=="voice_over"]<-"VoiceOver sample"
+stats$label[stats$user_type=="ios_sample"]<-"iOS sample"
+stats$label[stats$user_type=="TapTapSee"]<-"TapTapSee sample"
+stats$label_f<-factor(stats$label,levels=c("VoiceOver sample","iOS sample","TapTapSee sample"))
+library(grid)
+cairo_pdf(file='friendcount_facebookage.pdf',width=10,height=7)
+ggplot(stats[stats$user_type %in% c("voice_over","ios_sample"),], aes(x=months_since_confirmed, y=median, color=label_f))+ylab("median friend count")+xlim(0,84)+ylim(0,600)+xlab("number of months since joined Facebook")+geom_line(aes(linetype=label_f),size=2) + theme_bw(16)+ opts(legend.text=element_text(size=24)) + opts(legend.title=element_blank()) + theme(legend.position=c(0.3,0.85))+ theme(axis.text=element_text(size=24))+theme(axis.title=element_text(size=24))+opts(legend.key.width=unit(3,"line"),legend.key.height=unit(2,"line"))
+
+dev.off()
+#ggsave(filename="friendcount_facebookage.pdf",p)
+```
+
+```{r}
+ t.test(as.integer(paste(sampled[sampled$user_type=='voice_over',]$days_since_confirmed)), as.integer(paste(sampled[sampled$user_type=='ios_sample',]$days_since_confirmed)))
+```
+
+
+```{r fig.width=7, fig.height=6}
+ggplot(stats, aes(x=months_since_confirmed, y=mean, color=user_type))+ylab("avg. friend count")+geom_errorbar(aes(ymin=mean-sd,ymax=mean+sd),width=.1)+geom_line()+geom_point()+ylim(-500,1500)+xlim(0,84)                                                                                                                                                                                                                    
+
+```
+
+So, contradict to our hypothesis, it seems that vision-impaired users do not have smaller social networks, as comparing to sighted users. In fact, when looking at the median friend_count as function of facebookage, vision-impaired users seem to have more friends than sighted users, at least for those who are relatively new to facebook.
+
+************************
+Now let's look at the density of ego graph for vision-impaired users and sighted users: do vision-impaired users have denser network?
+
+
+```{r}
+sampled_ego<-read.delim("all_sampled_egographs_20130715.tsv",header=FALSE, sep="\t", col.names=c("userid","type","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"),fill=TRUE,quote='',comment='')
+
+
+sampled_ego$user_type<-factor(sampled_ego$type,levels(sampled_ego$type)[c(3,1,5,4,2)])
+
+summary(sampled_ego$user_type)
+
+tts_ego<-tts[,c("userid","type","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes","user_type")]
+
+sampled_ego<-rbind(sampled_ego,tts_ego)
+
+### Calculate various network density metrics
+sampled_ego$cluster_coefficient<-sampled_ego$edges/(sampled_ego$nodes*(sampled_ego$nodes-1)/2)
+sampled_ego$triangle_density<-sampled_ego$triangles/(sampled_ego$nodes*(sampled_ego$nodes-1)*(sampled_ego$nodes-2)/6)
+
+#egograph_stats<-ddply(sampled_ego[!is.na(sampled_ego$cluster_coefficient),], .(user_type, months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+
+```
+
+First let's compare the distribution of ego graph cluster coefficient.
+
+```{r fig.width=7, fig.height=6}
+plot(ecdf(sampled_ego[sampled_ego$type=='high_contrast_mode',]$cluster_coefficient),xlab="cluster coefficient", ylab="CDF", col=rainbow(6)[1],main="Distributon of ego graph cluster coefficient")
+plot(ecdf(sampled_ego[sampled_ego$type=='chromevox',]$cluster_coefficient),add=TRUE,col=rainbow(6)[2])
+plot(ecdf(sampled_ego[sampled_ego$type=='voice_over',]$cluster_coefficient),add=TRUE,col=rainbow(6)[3])
+plot(ecdf(sampled_ego[sampled_ego$type=='ios_sample',]$cluster_coefficient),add=TRUE,col=rainbow(6)[4])
+plot(ecdf(sampled_ego[sampled_ego$type=='fb_sample',]$cluster_coefficient),add=TRUE,col=rainbow(6)[5])
+
+plot(ecdf(sampled_ego[sampled_ego$type=='TapTapSee',]$cluster_coefficient),add=TRUE,col=rainbow(6)[5])
+
+legend("bottomright",c("high_contrast_mode","chromevox","voice_over","ios_sample","fb_sample","TapTapSee"),col=rainbow(6),lty=c(1,1,1,1,1,1),lwd=2,bty="n")
+```
+
+
+```{r fig.width=7, fig.height=6}
+cairo_pdf("cluster_coefficient.pdf",width=10,height=7)
+par(mar=c(5,5,1,1))
+plot(ecdf(sampled_ego[sampled_ego$type=='voice_over',]$cluster_coefficient),xlab="ego graph clustering coefficient", ylab="Empirical CDF",xlim=c(0,0.6),lty=1, lwd=2, col=rainbow(3)[1],cex.axis=2, cex.lab=2, main=NULL)
+plot(ecdf(sampled_ego[sampled_ego$type=='ios_sample',]$cluster_coefficient),add=TRUE,lty=20, lwd=2, col=rainbow(3)[2])
+plot(ecdf(sampled_ego[sampled_ego$type=='TapTapSee',]$cluster_coefficient),add=TRUE, lty=30, lwd=2,col=rainbow(3)[3])
+
+legend("bottomright",c("VoiceOver Sample","iOS Sample","TapTapSee Sample"),col=rainbow(3),lty=c(1,20,30),lwd=2,bty="n",cex=2)
+dev.off()
+```
+
+Let's control on network size.
+
+```{r}
+stats<-ddply(sampled_ego[!is.na(sampled_ego$cluster_coefficient),], .(user_type, bin=floor(nodes/10)), summarize, mean=mean(cluster_coefficient), sd=sd(cluster_coefficient), median=median(cluster_coefficient))
+
+```
+
+```{r fig.width=7, fig.height=6}
+
+stats$label[stats$user_type=="voice_over"]<-"VoiceOver sample"
+stats$label[stats$user_type=="ios_sample"]<-"iOS sample"
+stats$label[stats$user_type=="TapTapSee"]<-"TapTapSee sample"
+stats$label_f<-factor(stats$label,levels=c("VoiceOver sample","iOS sample","TapTapSee sample"))
+
+#ggplot(stats[stats$user_type %in% c("voice_over","ios_sample","TapTapSee"),], aes(x=bin, y=mean, color=label))+ylab("average clustering coefficient per bin")+xlab("friend count (bin size = 10)")+geom_line(aes(linetype=label),size=3) + theme_bw(16)+ opts(legend.text=element_text(size=24)) + opts(legend.title=element_blank()) + theme(legend.position=c(0.75,0.85))+ theme(axis.text=element_text(size=24))+theme(axis.title=element_text(size=24))+scale_x_continuous(limits=c(0,100),breaks=seq(0,100,25),labels=seq(0,1000,250))+ scale_color_discrete(breaks=c("VoiceOver sample","TapTapSee sample","iOS sample"))
+
+cairo_pdf(file='friendcount_clustering_coefficient.pdf',width=10,height=7)
+
+ggplot(stats[stats$user_type %in% c("voice_over","ios_sample","TapTapSee"),], aes(x=bin, y=mean, color=label_f))+ylab("avg. clustering coefficient per bin")+xlab("friend count (bin size = 10)")+geom_line(aes(linetype=label_f),size=2) + theme_bw(16)+ opts(legend.text=element_text(size=24)) + opts(legend.title=element_blank()) + theme(legend.position=c(0.7,0.8))+ theme(axis.text=element_text(size=24))+theme(axis.title=element_text(size=24))+scale_x_continuous(limits=c(0,100),breaks=seq(0,100,10),labels=seq(0,1000,100))+opts(legend.key.width=unit(3,"line"),legend.key.height=unit(2,"line"))
+
+dev.off()
+#ggsave(filename="friendcount_facebookage.pdf",p)
+```
+
+It seems chromevox and voice over users have slightly higher cluster coefficient comparing to random sampled iOS users, but lower than random sampled general FB users.
+
+However, for TapTapSee users, the density of their social graphs is lower than other groups.
+
+Let's compare the density of triangles in individuals' ego graphs.
+
+
+```{r fig.width=7, fig.height=6}
+plot(ecdf(sampled_ego[sampled_ego$type=='high_contrast_mode',]$triangle_density+1),xlab="triangle density + 1", ylab="CDF", col=rainbow(5)[1],main="Distributon of ego graph triangle density",log="x",xlim=c(1,2))
+plot(ecdf(sampled_ego[sampled_ego$type=='chromevox',]$triangle_density+1),add=TRUE,col=rainbow(5)[2],log="x")
+plot(ecdf(sampled_ego[sampled_ego$type=='voice_over',]$triangle_density+1),add=TRUE,col=rainbow(5)[3],log="x")
+plot(ecdf(sampled_ego[sampled_ego$type=='ios_sample',]$triangle_density+1),add=TRUE,col=rainbow(5)[4],log="x")
+plot(ecdf(sampled_ego[sampled_ego$type=='fb_sample',]$triangle_density+1),add=TRUE,col=rainbow(5)[5],log="x")
+
+legend("bottomright",c("high_contrast_mode","chromevox","voice_over","ios_sample","fb_sample"),col=rainbow(5),lty=c(1,1,1,1,1),lwd=2,bty="n")
+```
+
+```{r fig.width=7, fig.height=6}
+plot(ecdf(sampled_ego[sampled_ego$type=='voice_over',]$triangle_density+1),xlab="triangle density + 1", ylab="CDF", col=rainbow(3)[1],main="Distributon of ego graph triangle density",log="x",xlim=c(1,2))
+plot(ecdf(sampled_ego[sampled_ego$type=='ios_sample',]$triangle_density+1),add=TRUE,col=rainbow(3)[2],log="x")
+plot(ecdf(sampled_ego[sampled_ego$type=='TapTapSee',]$triangle_density+1),add=TRUE,col=rainbow(3)[3],log="x")
+
+legend("bottomright",c("VoiceOver","iOS","TapTapSee"),col=rainbow(3),lty=c(1,20,21),lwd=2,bty="n")
+```
+
+Again, screen reader users have a slightly higher triangle density in their ego graphs comparing to iOS users, but lower than general fb users. 
+
+How about the # of communities in individual's ego graph, do vision-impaired users have more or less communities in Facebook?
+
+```{r fig.width=7, fig.height=6}
+plot(ecdf(sampled_ego[sampled_ego$type=='high_contrast_mode',]$approx_communities),xlab="approx. community count", ylab="CDF", col=rainbow(5)[1],main="Distributon of # of communities",xlim=c(0,20))
+plot(ecdf(sampled_ego[sampled_ego$type=='chromevox',]$approx_communities),add=TRUE,col=rainbow(5)[2])
+plot(ecdf(sampled_ego[sampled_ego$type=='voice_over',]$approx_communities),add=TRUE,col=rainbow(5)[3])
+plot(ecdf(sampled_ego[sampled_ego$type=='ios_sample',]$approx_communities),add=TRUE,col=rainbow(5)[4])
+plot(ecdf(sampled_ego[sampled_ego$type=='fb_sample',]$approx_communities),add=TRUE,col=rainbow(5)[5])
+
+legend("bottomright",c("high_contrast_mode","chromevox","voice_over","ios_sample","fb_sample"),col=rainbow(5),lty=c(1,1,1,1,1),lwd=2,bty="n")
+```
+
+```{r fig.width=7, fig.height=6}
+cairo_pdf("community_count.pdf",width=10,height=7)
+par(mar=c(5,5,1,1))
+x=c(0:15)
+plot(x,ecdf(sampled_ego[sampled_ego$type=='voice_over',]$approx_communities)(x),xlab="# of communities in ego's social network", ylab="empirical CDF", col=rainbow(3)[1],lty=1, pch=1, lwd=2, cex.axis=2, cex.lab=2, main=NULL,type="o")
+points(x,ecdf(sampled_ego[sampled_ego$type=='ios_sample',]$approx_communities)(x),type="o",pch=2,lty=20,lwd=2,col=rainbow(3)[2])
+points(x,ecdf(sampled_ego[sampled_ego$type=='TapTapSee',]$approx_communities)(x),type="o",lty=30, pch=3, lwd=2,col=rainbow(3)[3])
+
+legend("bottomright",c("VoiceOver sample","iOS sample","TapTapSee sample"),col=rainbow(3),lty=c(1,20,30),pch=c(1,2,3),lwd=2,bty="n",cex=2)
+dev.off()
+
+```
+Overall, we can't find evidence that vision-impaired users have smaller and denser social networks, at least at Facebook.
+
+*******************
+
+The next question will be whether vision-impaired users are more likely to be friend with each other.
+
+Hive query:
+```
+select distinct userid, accessibility_type, all_friends, vo_friends, hcm_friends, cv_friends, ios_sample_friends, fb_sample_friends, non_sampled_friends from test_shaomei_accessibility_sample_user_at_friends where accessibility_type in ('ios_sample', 'voice_over')
+
+```
+
+```{r}
+setwd("~/accessibility/paper")
+inter<-read.delim("vo_ios_users_interconnectivity.tsv", header=FALSE, sep="\t", col.names=c("userid","type","all","vo","hcm","cv","ios_sample","fb_sample","non_sampled"))
+
+ios.inter<-ecdf(inter[inter$type=='ios_sample',]$vo)
+vo.inter<-ecdf(inter[inter$type=='voice_over',]$vo)
+
+ios.all<-ecdf(inter[inter$type=='ios_sample',]$all)
+vo.all<-ecdf(inter[inter$type=='voice_over',]$all)
+
+```
+
+
+```{r fig.width=9 fig.height=8}
+x<-c(0:20)
+plot(x, ios.inter(x),xlab="# of friends who use VoiceOver", ylab="emperical CDF", col="red",main="Distributon of # of VO friends",type="o",ylim=c(0,1),pch=1)
+points(x, vo.inter(x), col="blue", type="o",pch=2)
+legend("bottomright",c("iOS sample","VoiceOver user"),col=c("red","blue"),pch=c(1,2),bty="n")
+```
+
+```{r}
+cairo_pdf("interconnectivity.pdf", width=10,height=7)
+par(mar=c(5,5,1,1))
+x<-c(0:20)
+plot(x, ios.inter(x),xlab="# of friends in the VoiceOver sample", ylab="emperical CDF", col="red",main=NULL,type="o",ylim=c(0.6,1),pch=1,lwd=2,cex.lab=2,cex.axis=2,cex=2,lty=20)
+points(x, vo.inter(x), col="blue", type="o",pch=2,lwd=2,cex=2, lty=1)
+legend("bottomright",c("iOS sample","VoiceOver sample"),cex=2,col=c("red","blue"),lty=c(20,1),pch=c(1,2),bty="n")
+dev.off()
+```
+
+```{r fig.width=9 fig.height=8}
+x<-c(0:800)
+plot(x, ios.all(x),xlab="# of friends", ylab="emperical CDF", col="red",main="Distributon of # of friends",type="l",ylim=c(0,1),lty=1,lwd=2)
+lines(x, vo.all(x), col="blue", lty=2,lwd=2)
+legend("bottomright",c("iOS sample","VoiceOver user"),col=c("red","blue"),lty=c(1,2),bty="n")
+```
+
+
+So Voice Over users seem to have a slightly less number of friends, they do have more friends who also use Voice Over!
+
+
+****************************
+
+===================== this is old data ==================
+
+```{r}
+setwd("~/accessibility/paper")
+
+# Load data
+impaired<-read.delim("20130515_blind_user_dim.tsv",sep="\t",header=FALSE, col.names=c("userid", "platform_type", "accessibility_tech", "source","country", "age", "gender", "facebookage", "political", "current_city_profile", "current_zip_profile", "hometown_geo_country_profile", "country_from_ip", "city_from_ip", "relationshipstatus", "locale", "friend_count", "subscription_count", "subscriber_count", "num_initiated", "days_since_confirmed", "l7", "l28", "web_l7", "web_l28", "mobile_l7", "mobile_l28", "platform_l7", "platform_l28", "age_bracket", "days_since_confirmed_bracket", "friend_count_bracket", "days_since_last_action_bracket", "l28_bracket", "facebook_age_bracket"), fill=TRUE, quote='',comment='')
+
+fb_sample<-read.delim("20130515_1M_fb_user_dim.tsv",sep="\t",header=FALSE,col.names=c("ds","userid","country","age","gender","facebookage","political","current_city_profile", "current_zip_profile", "hometown_geo_country_profile", "country_from_ip", "city_from_ip", "relationshipstatus", "locale", "friend_count", "subscription_count", "subscriber_count", "num_initiated", "days_since_confirmed", "l7", "l28", "web_l7", "web_l28", "mobile_l7", "mobile_l28", "platform_l7", "platform_l28", "age_bracket", "days_since_confirmed_bracket", "friend_count_bracket", "days_since_last_action_bracket", "l28_bracket", "facebook_age_bracket"),fill=TRUE,quote='',comment='')
+
+ios_sample<-read.delim("20130515_sample_ios_user_dim.tsv",sep="\t",header=FALSE,col.names=c("ds","userid","country","age","gender","facebookage","political","current_city_profile", "current_zip_profile", "hometown_geo_country_profile", "country_from_ip", "city_from_ip", "relationshipstatus", "locale", "friend_count", "subscription_count", "subscriber_count", "num_initiated", "days_since_confirmed", "l7", "l28", "web_l7", "web_l28", "mobile_l7", "mobile_l28", "platform_l7", "platform_l28", "age_bracket", "days_since_confirmed_bracket", "friend_count_bracket", "days_since_last_action_bracket", "l28_bracket", "facebook_age_bracket"),fill=TRUE,quote='',comment='')
+
+# factorize friend_count_bracket
+impaired$friend_count_bracket<-factor(impaired$friend_count_bracket, levels=c("0-10","11-20","21-30","31-40","41-50","51-100","101-200","201-500","501+"))
+fb_sample$friend_count_bracket<-factor(fb_sample$friend_count_bracket, levels=c("0-10","11-20","21-30","31-40","41-50","51-100","101-200","201-500","501+"))
+ios_sample$friend_count_bracket<-factor(ios_sample$friend_count_bracket, levels=c("0-10","11-20","21-30","31-40","41-50","51-100","101-200","201-500","501+"))
+
+# iOS vs android users among blind users
+table(impaired$platform_type)
+
+```
+
+```{r}
+table(impaired$friend_count_bracket)
+table(fb_sample$friend_count_bracket)
+table(ios_sample$friend_count_bracket)
+
+```
+
+Plot the histogram of friend distribution based on friend_count_bracket
+
+```{r fig.width=7, fig.height=6}
+barplot(table(impaired$friend_count_bracket)/length(impaired$friend_count_bracket)*100,main="blind users",xlab="friend count",ylab="%")
+
+barplot(table(fb_sample$friend_count_bracket)/length(fb_sample$friend_count_bracket)*100,main="1M random fb users",xlab="friend count",ylab="count")
+
+barplot(table(ios_sample$friend_count_bracket)/length(ios_sample$friend_count_bracket)*100,main="200K random ios fb users",xlab="friend count",ylab="count")
+
+```
+
+It seems that vision impaired users do not necessarily have smaller social network. But can it be explained by how long they have been on facebook?
+
+```{r}
+# defactorize days_since_confirmed and friendcount
+impaired$friend_count_num<-as.integer(paste(impaired$friend_count))
+impaired$days_since_confirmed<-as.integer(paste(impaired$days_since_confirmed))
+
+fb_sample$friend_count_num<-as.integer(paste(fb_sample$friend_count))
+fb_sample$days_since_confirmed<-as.integer(paste(fb_sample$days_since_confirmed))
+
+ios_sample$friend_count_num<-as.integer(paste(ios_sample$friend_count))
+ios_sample$days_since_confirmed<-as.integer(paste(ios_sample$days_since_confirmed))
+
+# estimate (friend_count ~ months_since_confirmed)
+library(plyr)
+
+impaired_stats<-ddply(impaired[!is.na(impaired$friend_count_num),], .(platform=platform_type, months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+impaired_stats
+
+fb_stats<-ddply(fb_sample[!is.na(fb_sample$friend_count_num),], .(months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+fb_stats$platform=rep("FB random sample",dim(fb_stats)[1])
+fb_stats
+
+ios_stats<-ddply(ios_sample[!is.na(fb_sample$friend_count_num),], .(months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+ios_stats$platform=rep("FB for iOS user random sample",dim(ios_stats)[1])
+ios_stats
+
+library(ggplot2)
+```
+
+Here we bin users by the number of months since email(or sms?) confirmation, and plot the median and mean of friend count for users in each bucket. In the second plot, we also show the standard deviation for the average friend count in each bucket.
+
+```{r fig.width=7, fig.height=6}
+ggplot(rbind(impaired_stats,fb_stats,ios_stats), aes(x=months_since_confirmed, y=median, color=platform))+geom_line()+ylab("median friend count")+xlim(0,84)+ylim(0,1000)
+
+```
+
+```{r fig.width=7, fig.height=6}
+ggplot(rbind(impaired_stats,fb_stats,ios_stats), aes(x=months_since_confirmed, y=mean, color=platform))+ylab("avg. friend count")+geom_errorbar(aes(ymin=mean-sd,ymax=mean+sd),width=.1)+geom_line()+geom_point()+ylim(-500,1500)+xlim(0,84)                                                                                                                                                                                                                    
+
+```
+
+So, contradict to our hypothesis, it seems that vision-impaired users do not have smaller social networks, as comparing to sighted users. In fact, when looking at the median friend_count as function of facebookage, vision-impaired users seem to have more friends than sighted users, at least for those who are relatively new to facebook.
+
+Now let's look at the density of ego graph for vision-impaired users and sighted users.
+
+```{r}
+### Load egograph_stats
+impaired_ego<-read.delim("20130515_blind_user_egograph_stats.tsv",header=FALSE, sep="\t", col.names=c("userid","platform_type","accessibility_tech","source","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"),fill=TRUE,quote='',comment='')
+
+fb_ego<-read.delim("20130515_1M_fb_user_egograph_stats.tsv",header=FALSE, sep="\t", col.names=c("userid","platform_type","accessibility_tech","source","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"),fill=TRUE,quote='',comment='')
+
+ios_ego<-read.delim("20130515_sample_ios_user_egograph_stats.tsv",header=FALSE, sep="\t", col.names=c("userid","platform_type","accessibility_tech","source","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"),fill=TRUE,quote='',comment='')
+
+### Calculate various network density metrics
+impaired_ego$cluster_coefficient<-impaired_ego$edges/(impaired_ego$nodes*(impaired_ego$nodes-1)/2)
+impaired_ego$triangle_density<-impaired_ego$triangles/(impaired_ego$nodes*(impaired_ego$nodes-1)*(impaired_ego$nodes-2)/6)
+
+fb_ego$cluster_coefficient<-fb_ego$edges/(fb_ego$nodes*(fb_ego$nodes-1)/2)
+fb_ego$triangle_density<-fb_ego$triangles/(fb_ego$nodes*(fb_ego$nodes-1)*(fb_ego$nodes-2)/6)
+
+```
+
+```{r fig.width=7, fig.height=6}
+plot(ecdf(impaired_ego$cluster_coefficient))
+plot(ecdf(fb_ego$cluster_coefficient), add=TRUE, col="red")
+```
+
+Do vision-impaired users more likely to friend with other vision impaired users?

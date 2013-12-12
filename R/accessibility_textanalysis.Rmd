@@ -1,0 +1,214 @@
+Accessibility users study: text analysis
+========================================================
+
+1. What's in the caption of accessibility users photos? Do they use FB to ask for help with visual problems?
+
+(1) # of question marks?
+(2) # of photos with caption
+(3) trending words
+
+Example hive query:
+/usr/local/prism/bin/hive --namespace mobile -e "select if(accessibility_type = 'voice_over', 1, 0) as label, text as text from test_shaomei_accessibility_sample_user_content_create where content_type = 'photo' and length(text) > 2 and accessibility_type in ('voice_over', 'ios_sample') and privacydata = 40 and locale='en_US';" > onlyfriends_photo_caption_text_ios_vs_vo.tsv
+
+Then run the trend detection algorithm as described in Kleinberg's paper:
+python getTrendingTokens.py onlyfriends_photo_caption_text_ios_vs_vo.tsv 30 10 50
+
+
+Here is the result (positive class is visionally impaired users, negative class for iPhone sample).
+
+
+normalized absolute change
+
+positive words     |     negative words
+------------------ |-------------------
+radio | for
+to | day
+am | and
+me | gwen
+on | ?
+tunein | birthday
+listening | happy
+with | celebration
+by | john
+my | have
+of | \u2764
+the | off
+out | it's
+peachtree | fun
+fm | family
+http:\/\/tun.in\/se8qe | work
+check | little
+hatchi | we
+http:\/\/facebook.com\/hatchiapp | beach
+you | this
+mi | life
+\u003c3 | see
+his | our
+god | miss
+first | big
+lord | amazing
+who | morning
+baby | party
+eyes | thanks
+scrimmage | last
+navy\/gold | #tbt
+http:\/\/go.bibleinspirationsapp.com\/db_fb | had
+was | before
+is | awesome
+look | na
+lol | been
+#dailyquote | best
+will | vacation
+taptapsee | from
+http:\/\/bit.ly\/11j2rfj | po
+discovered | weekend
+take | view
+in | lunch
+are | dinner
+2013 | can't
+like | all
+pictures | wedding
+#picoftheday | tonight
+#photooftheday | summer
+circus | girl
+
+------------------------------
+
+**normalized relative change**
+
+positive words     |    negative words
+------------------ |-------------------
+peachtree | raining
+taptapsee | #sri_lanka
+fm | spiders
+http:\/\/tun.in\/sewky | conjuring
+lol\udbb8\udf29 | otro
+http:\/\/facebook.com\/hatchiapp | truong
+karla's | lori
+hd2 | hermana
+98.7 | kent
+#dailyquote | #everybody
+blanch | flys
+navy\/gold | #feelings
+http:\/\/tun.in\/se8qe | #princess
+miscellaneous | c\u0169ng
+hatchi | #myson
+tunein | #ohms
+http:\/\/bit.ly\/11j2rfj | miller
+radio | snuggles
+julian's | tires
+circus | snuggled
+dengan | #cali
+arrowhead | thunder
+cane | \udbb9\udfde\udbb9\udfde\udbb9\udfde\udbb8\udc38\udbb8\udc38\udbb8\udc38\udbb8\udc38\udbb8\udc38\udbb8\udf33\udbb8\udf33\udbb8\udf33\udbb8\udf27\udbb8\udf27\udbb8\udf27\udbb8\udf2c\udbb8\udf2c\udbb8\udf2c\udbba\udf97\udbba\udf97\udbba\udf97\udbb8\udf38\udbb8\udf38\udbb8\udf33\udbb8\udf33\udbb8\udf33\udbb8\udf33\udbb8\udf33
+closely | fingers
+scrimmage | lmp
+discovered | dialogo
+#qotd | avery
+listening | jasmine
+jeremiah | china
+\u266b | hers
+elijah | #shorthair
+lies | climbed
+chester | #exclusively
+#camera360# | lml
+saya | divide
+gabby | explained
+\u2026 | replace
+yang | #tigers
+-* | txt
+unlocked | dnt
+saving | strike
+badge | #aviary
+zip | hols
+peak | 99
+#dope | hermano
+champs | 90
+checked | #barber101
+fellas | #rainyday
+philadelphia | blade
+dah | locker
+
+-------------------------
+**probability change**
+
+positive words     |  negative words
+------------------ |-------------------
+#truth | yellow
+raining | four
+#sri_lanka | hanging
+woods | lord
+spiders | wednesday
+conjuring | path
+otro | second
+truong | hero
+lori | aug
+hermana | i'm
+kent | music
+#everybody | therefore
+bringing | until
+flys | holy
+#feelings | relax
+#princess | hold
+c\u0169ng | want
+#myson | turn
+#ohms | hot
+bill | hoy
+tired | #share
+miller | beauty
+snuggles | keeps
+bacon | wind
+tires | silver
+snuggled | mason
+#cali | smh
+thunder | #goodnight
+\udbb9\udfde\udbb9\udfde\udbb9\udfde\udbb8\udc38\udbb8\udc38\udbb8\udc38\udbb8\udc38\udbb8\udc38\udbb8\udf33\udbb8\udf33\udbb8\udf33\udbb8\udf27\udbb8\udf27\udbb8\udf27\udbb8\udf2c\udbb8\udf2c\udbb8\udf2c\udbba\udf97\udbba\udf97\udbba\udf97\udbb8\udf38\udbb8\udf38\udbb8\udf33\udbb8\udf33\udbb8\udf33\udbb8\udf33\udbb8\udf33 | heading
+fingers | today's
+lmp | julian's
+#gorgeous | needed
+dialogo | listen
+avery | tree
+jasmine | shower
+here | esta
+china | boston
+cart | \u2764\u2764\u2764
+&& | doors
+hers | shall
+#shorthair | doin
+kids | mouth
+climbed | camp
+#exclusively | came
+i'd | cooking
+s'mores | baby's
+lml | iphone\/ipad
+golden | goodnight
+divide | result
+explained | score
+
+
+
+
+A few keywords pop-out in the caption of photos: **TapTapSee**, and **camera360**.
+
+There are 104 voice_over users and 1 high-contrast-mode users mentioned TapTapSee in their status updates, comment, or photo caption, and none of people in the random sample did so.
+
+I sampled some of the text, it seems that it's a super handy tool for blind people and there are many very moving messages about using it (for example, somebody discovered for the first time that her hair is brown!).
+
+I also looked at the activity trends - nothing concret pop out so far...
+
+
+
+2. Does accessibility users write less (status updates) - shorter sentence, less status updates?
+
+
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r fig.width=7, fig.height=6}
+plot(cars)
+```
+

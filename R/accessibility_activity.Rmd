@@ -1,0 +1,234 @@
+Accessibility User study: Facebook Use
+========================================================
+Study how blind people use Facebook. 
+
+1. Photo related activities
+
+Focus on photo features, compare the usage of photo related features between blind users and random sampled iPhone users.
+
+
+all.status_update.photo
+all.photo_comment
+all.photo_comment.recipient
+all.photo_like
+all.photo_like.recipient
+all.photo_album_comment
+all.photo_album_comment.recipient
+
+2. Other content creation: status updates, comments, likes
+
+3. Feedback received
+
+
+Hive command to get the data
+```
+/usr/local/prism/bin/hive --namespace mobile -e "select * from test_shaomei_accessibility_sample_user_content_create_summary where accessibility_type in ('voice_over', 'ios_sample');" > ~/accessibility/paper/at_user_content_create_summary_20130825.tsv
+
+/usr/local/prism/bin/hive --namespace mobile -e "select * from test_shaomei_accessibility_sample_user_content_feedback_summary where accessibility_type in ('voice_over', 'ios_sample');" > ~/accessibility/paper/at_user_content_feedback_summary_20130825.tsv
+
+```
+```{r}
+setwd("~/accessibility/paper")
+content_summary<-read.delim("at_user_content_create_summary_20130825.tsv",sep="\t",header=FALSE,col.names=c("userid","type","onlyfriend_photos","public_photos","private_photos","photos_with_question","onlyfriend_status","public_status","private_status","status_with_question","comments","likes","photo_comments","photo_likes"))
+str(content_summary)
+content_summary$total_photos<-content_summary$onlyfriend_photos+content_summary$public_photos+content_summary$private_photos
+content_summary$total_status<-content_summary$onlyfriend_status+content_summary$public_status+content_summary$private_status
+
+#content_summary$status_question_rate<-content_summary$status_with_question/content_summary$total_status
+#content_summary$photo_question_rate<-content_summary$photos_with_question/content_summary$total_photos
+
+
+summary(content_summary)
+
+p.photos<-ggplot(content_summary, aes(x=type,y=total_photos,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$total_photos, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.public.photos<-ggplot(content_summary, aes(x=type,y=public_photos,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$public_photos, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.status<-ggplot(content_summary, aes(x=type,y=total_status,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$total_status, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.public.status<-ggplot(content_summary, aes(x=type,y=public_status,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$public_status, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.status.with.question<-ggplot(content_summary, aes(x=type,y=status_with_question,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$status_with_question, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.likes<-ggplot(content_summary, aes(x=type,y=likes,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$likes, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.photo.likes<-ggplot(content_summary, aes(x=type,y=photo_likes,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$photo_likes, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.comments<-ggplot(content_summary, aes(x=type,y=comments,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$comments, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+p.photo.comments<-ggplot(content_summary, aes(x=type,y=photo_comments,group=type))+geom_boxplot(outlier.shape = NA) + scale_y_continuous(limits = quantile(content_summary$photo_comments, c(0.1, 0.9),na.rm=TRUE)) + xlab("User Type")+theme(axis.title = element_text(face="bold", size=16),axis.text = element_text(size=14), legend.text=element_text(size=16),legend.title=element_text(size=16))
+
+library(reshape)
+summary.melt = melt(content_summary,id.vars = c('userid','type'))
+foo<-ddply(summary.melt, .(usertype=type, metric=variable), summarise, mean=mean(value), sd=sd(value),median=median(value),count=length(value))
+
+summary.ios<-foo[foo$usertype=='ios_sample',]
+summary.vo<-foo[foo$usertype=='voice_over',]
+
+summary.ios
+summary.vo
+
+fb_dblue="#3b5998"
+fb_lblue="#8b9dc3"
+source('utils.r')
+
+# content production
+metrics<-c("total_status","total_photos")
+#,"comments","likes","photo_comments","photo_likes")
+
+yy<-matrix(c(summary.ios[summary.ios$metric %in% metrics,]$mean,summary.vo[summary.vo$metric %in% metrics,]$mean),2,2,byrow=TRUE)
+yy
+err<-matrix(c(1.96*summary.ios[summary.ios$metric %in% metrics,]$sd/sqrt(summary.ios[summary.ios$metric %in% metrics,]$count),1.96*summary.vo[summary.vo$metric %in% metrics,]$sd/sqrt(summary.vo[summary.vo$metric %in% metrics,]$count)),2,2,byrow=TRUE)
+err
+
+setwd("~/accessibility/paper")
+cairo_pdf("content_produce.pdf",width=6,height=8)
+par(lwd=3)
+par(mar=c(4,4,1,4))
+par(mgp=c(3,1,0))
+cp.bar<-barplot(yy,beside=TRUE,density=c(0,10),names.arg=c("total photos","total status updates"),legend.text=c("iOS sample","VoiceOver sample"),args.legend=list(x="topright",bty="n",cex=2,col=c(fb_dblue,fb_lblue)), border=TRUE,col=c(fb_dblue,fb_lblue),cex.names=2,cex.axis=2,space=c(0,2),ylim=c(0,11))
+error.bar(cp.bar,yy,err)
+dev.off()
+
+
+# feedback production
+metrics<-c("comments","photo_comments","likes","photo_likes")
+
+yy<-matrix(c(summary.ios[summary.ios$metric %in% metrics,]$mean,summary.vo[summary.vo$metric %in% metrics,]$mean),2,length(metrics),byrow=TRUE)
+yy
+err<-matrix(c(1.96*summary.ios[summary.ios$metric %in% metrics,]$sd/sqrt(summary.ios[summary.ios$metric %in% metrics,]$count),1.96*summary.vo[summary.vo$metric %in% metrics,]$sd/sqrt(summary.vo[summary.vo$metric %in% metrics,]$count)),2,length(metrics),byrow=TRUE)
+err
+
+cairo_pdf("feedback_send.pdf",width=10,height=8)
+par(lwd=3)
+par(mar=c(4,4,1,0))
+par(mgp=c(3,1,0))
+cp.bar<-barplot(yy,beside=TRUE,density=c(0,10),names.arg=c("total comments","total likes","photo comments","photo likes"),legend.text=c("iOS sample","VoiceOver sample"),args.legend=list(x="topright",bty="n",cex=2,col=c(fb_dblue,fb_lblue)), ,border=TRUE,col=c(fb_dblue,fb_lblue),cex.names=2,cex.axis=2,space=c(0,1),ylim=c(0,160))
+error.bar(cp.bar,yy,err)
+dev.off()
+
+# question ask
+metrics<-c("status_with_question","photos_with_question")
+
+yy<-matrix(c(summary.ios[summary.ios$metric %in% metrics,]$mean,summary.vo[summary.vo$metric %in% metrics,]$mean),2,length(metrics),byrow=TRUE)
+yy
+err<-matrix(c(1.96*summary.ios[summary.ios$metric %in% metrics,]$sd/sqrt(summary.ios[summary.ios$metric %in% metrics,]$count),1.96*summary.vo[summary.vo$metric %in% metrics,]$sd/sqrt(summary.vo[summary.vo$metric %in% metrics,]$count)),2,length(metrics),byrow=TRUE)
+err
+
+cairo_pdf("question_ask.pdf",width=6,height=7)
+par(lwd=3)
+par(mar=c(4,4,1,0))
+par(mgp=c(3,1,0))
+
+cp.bar<-barplot(yy,beside=TRUE,density=c(0,10),names.arg=c("photo question","status question"),legend.text=c("iOS sample","VoiceOver sample"),args.legend=list(x="topleft",bty="n",cex=2,col=c(fb_dblue,fb_lblue)), ,border=TRUE,col=c(fb_dblue,fb_lblue),cex.names=2,cex.axis=2,space=c(0,0.5),ylim=c(0,1))
+error.bar(cp.bar,yy,err)
+dev.off()
+
+```
+
+Run Wilcoxon test
+
+```{r}
+# wilcoxon test on content production metrics
+metric<-c("total_status")
+#,"total_photos")
+#,"comments","likes","photo_comments","photo_likes")
+vo.metrics<-subset(content_summary,content_summary$type=='voice_over')
+ios.metrics<-subset(content_summary,content_summary$type=='ios_sample')
+
+wilcox.test(vo.metrics$total_status,ios.metrics$total_status,paired=FALSE,conf.int=TRUE)
+
+t.test(vo.metrics$total_status,ios.metrics$total_status,paired=FALSE)
+
+wilcox.test(vo.metrics$total_photos,ios.metrics$total_photos,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.metrics$comments,ios.metrics$comments,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.metrics$likes,ios.metrics$likes,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.metrics$photo_comments,ios.metrics$photo_comments,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.metrics$photo_likes,ios.metrics$photo_likes,paired=FALSE,conf.int=TRUE)
+
+wilcox.test(vo.metrics$comments - vo.metrics$photo_comments,ios.metrics$photo_comments,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.metrics$photo_likes,ios.metrics$photo_likes,paired=FALSE,conf.int=TRUE)
+
+
+```
+
+Load feedback summary data.
+```{r}
+setwd("~/accessibility")
+feedback_summary<-read.delim("at_user_content_feedback_summary_20130825.tsv",sep="\t",header=FALSE,col.names=c("userid","type","status_likes","photo_likes","status_cmoments","photo_comments","status_question_commenters","photo_question_commenters"))
+
+str(feedback_summary)
+
+feedback.melt = melt(feedback_summary,id.vars = c('userid','type'))
+feedback.foo<-ddply(feedback.melt, .(usertype=type, metric=variable), summarise, mean=mean(value), sd=sd(value),median=median(value),count=length(value))
+
+feedback.ios<-feedback.foo[feedback.foo$usertype=='ios_sample',]
+feedback.vo<-feedback.foo[feedback.foo$usertype=='voice_over',]
+
+feedback.ios
+feedback.vo
+
+# feedback receive
+metrics<-c("status_cmoments","photo_comments","status_likes","photo_likes")
+
+yy<-matrix(c(feedback.ios[feedback.ios$metric %in% metrics,]$mean,feedback.vo[feedback.vo$metric %in% metrics,]$mean),2,length(metrics),byrow=TRUE)
+yy
+yy[,c(1,2,3,4)]<-yy[,c(3,1,4,2)]
+yy
+err<-matrix(c(1.96*feedback.ios[feedback.ios$metric %in% metrics,]$sd/sqrt(feedback.ios[feedback.ios$metric %in% metrics,]$count),1.96*feedback.vo[feedback.vo$metric %in% metrics,]$sd/sqrt(feedback.vo[feedback.vo$metric %in% metrics,]$count)),2,length(metrics),byrow=TRUE)
+err
+err[,c(1,2,3,4)]<-err[,c(3,1,4,2)]
+err
+
+cairo_pdf("feedback_receive.pdf",width=11,height=8)
+par(lwd=3)
+par(mar=c(4,4,1,1))
+par(mgp=c(3,1,0))
+
+cp.bar<-barplot(yy,beside=TRUE,density=c(0,10),names.arg=c("status comments","status likes","photo comments","photo likes"),legend.text=c("iOS sample","VoiceOver sample"),args.legend=list(x="topleft",bty="n",cex=2,col=c(fb_dblue,fb_lblue)), ,border=TRUE,col=c(fb_dblue,fb_lblue),cex.names=2,cex.axis=2,space=c(0,1),ylim=c(0,25))
+error.bar(cp.bar,yy,err)
+dev.off()
+
+# question response
+metrics<-c("status_question_commenters","photo_question_commenters")
+
+yy<-matrix(c(feedback.ios[feedback.ios$metric %in% metrics,]$mean,feedback.vo[feedback.vo$metric %in% metrics,]$mean),2,length(metrics),byrow=TRUE)
+# reorder the metrics so it's consistent very previous one!
+yy[,c(1,2)] <- yy[,c(2,1)]
+yy
+err<-matrix(c(1.96*feedback.ios[feedback.ios$metric %in% metrics,]$sd/sqrt(feedback.ios[feedback.ios$metric %in% metrics,]$count),1.96*feedback.vo[feedback.vo$metric %in% metrics,]$sd/sqrt(feedback.vo[feedback.vo$metric %in% metrics,]$count)),2,length(metrics),byrow=TRUE)
+err[,c(1,2)] <- err[,c(2,1)]
+err
+
+cairo_pdf("question_response.pdf",width=6,height=7)
+par(lwd=3)
+par(mar=c(4,4,1,0))
+par(mgp=c(3,1,0))
+cp.bar<-barplot(yy,beside=TRUE,density=c(0,10),names.arg=c("photo question","status question"),legend.text=c("iOS sample","VoiceOver sample"),args.legend=list(x="topleft",bty="n",cex=2,col=c(fb_dblue,fb_lblue)), border=TRUE,col=c(fb_dblue,fb_lblue),cex.names=2,cex.axis=2,space=c(0,0.5),ylim=c(0,4))
+
+error.bar(cp.bar,yy,err)
+dev.off()
+```
+
+Wilcoxon test
+
+```{r}
+vo.feedback<-subset(feedback_summary,feedback_summary$type=='voice_over')
+ios.feedback<-subset(feedback_summary,feedback_summary$type=='ios_sample')
+wilcox.test(vo.feedback$status_likes,ios.feedback$status_likes,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.feedback$status_cmoments,ios.feedback$status_cmoments,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.feedback$photo_likes,ios.feedback$photo_likes,paired=FALSE,conf.int=TRUE)
+wilcox.test(vo.feedback$photo_comments,ios.feedback$photo_comments,paired=FALSE,conf.int=TRUE)
+
+t.test(vo.feedback$photo_comments,ios.feedback$photo_comments,paired=FALSE)
+
+prop.table(table(content_summary$likes>0,content_summary$type))
+chisq.test(table(content_summary$likes>0,content_summary$type))
+```
+
+You can also embed plots, for example:
+
+```{r fig.width=7, fig.height=6}
+plot(cars)
+```
+

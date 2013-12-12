@@ -1,0 +1,113 @@
+The local network structure of vision-impaired users
+========================================================
+
+Previous research suggested (cite Jeffrey Bigham) that vision-impaird people have a smaller, and denser social networks. We want to see whether this is true for vision-impaired users in Facebook.
+
+
+
+```{r}
+setwd("~/accessibility")
+# Load data
+impaired<-read.delim("20130515_blind_user_dim.tsv",sep="\t",header=FALSE, col.names=c("userid", "platform_type", "accessibility_tech", "source","country", "age", "gender", "facebookage", "political", "current_city_profile", "current_zip_profile", "hometown_geo_country_profile", "country_from_ip", "city_from_ip", "relationshipstatus", "locale", "friend_count", "subscription_count", "subscriber_count", "num_initiated", "days_since_confirmed", "l7", "l28", "web_l7", "web_l28", "mobile_l7", "mobile_l28", "platform_l7", "platform_l28", "age_bracket", "days_since_confirmed_bracket", "friend_count_bracket", "days_since_last_action_bracket", "l28_bracket", "facebook_age_bracket"), fill=TRUE, quote='',comment='')
+
+fb_sample<-read.delim("20130515_1M_fb_user_dim.tsv",sep="\t",header=FALSE,col.names=c("ds","userid","country","age","gender","facebookage","political","current_city_profile", "current_zip_profile", "hometown_geo_country_profile", "country_from_ip", "city_from_ip", "relationshipstatus", "locale", "friend_count", "subscription_count", "subscriber_count", "num_initiated", "days_since_confirmed", "l7", "l28", "web_l7", "web_l28", "mobile_l7", "mobile_l28", "platform_l7", "platform_l28", "age_bracket", "days_since_confirmed_bracket", "friend_count_bracket", "days_since_last_action_bracket", "l28_bracket", "facebook_age_bracket"),fill=TRUE,quote='',comment='')
+
+ios_sample<-read.delim("20130515_sample_ios_user_dim.tsv",sep="\t",header=FALSE,col.names=c("ds","userid","country","age","gender","facebookage","political","current_city_profile", "current_zip_profile", "hometown_geo_country_profile", "country_from_ip", "city_from_ip", "relationshipstatus", "locale", "friend_count", "subscription_count", "subscriber_count", "num_initiated", "days_since_confirmed", "l7", "l28", "web_l7", "web_l28", "mobile_l7", "mobile_l28", "platform_l7", "platform_l28", "age_bracket", "days_since_confirmed_bracket", "friend_count_bracket", "days_since_last_action_bracket", "l28_bracket", "facebook_age_bracket"),fill=TRUE,quote='',comment='')
+
+# factorize friend_count_bracket
+impaired$friend_count_bracket<-factor(impaired$friend_count_bracket, levels=c("0-10","11-20","21-30","31-40","41-50","51-100","101-200","201-500","501+"))
+fb_sample$friend_count_bracket<-factor(fb_sample$friend_count_bracket, levels=c("0-10","11-20","21-30","31-40","41-50","51-100","101-200","201-500","501+"))
+ios_sample$friend_count_bracket<-factor(ios_sample$friend_count_bracket, levels=c("0-10","11-20","21-30","31-40","41-50","51-100","101-200","201-500","501+"))
+
+# iOS vs android users among blind users
+table(impaired$platform_type)
+
+```
+
+```{r}
+table(impaired$friend_count_bracket)
+table(fb_sample$friend_count_bracket)
+table(ios_sample$friend_count_bracket)
+
+```
+
+Plot the histogram of friend distribution based on friend_count_bracket
+
+```{r fig.width=7, fig.height=6}
+barplot(table(impaired$friend_count_bracket)/length(impaired$friend_count_bracket)*100,main="blind users",xlab="friend count",ylab="%")
+
+barplot(table(fb_sample$friend_count_bracket)/length(fb_sample$friend_count_bracket)*100,main="1M random fb users",xlab="friend count",ylab="count")
+
+barplot(table(ios_sample$friend_count_bracket)/length(ios_sample$friend_count_bracket)*100,main="200K random ios fb users",xlab="friend count",ylab="count")
+
+```
+
+It seems that vision impaired users do not necessarily have smaller social network. But can it be explained by how long they have been on facebook?
+
+```{r}
+# defactorize days_since_confirmed and friendcount
+impaired$friend_count_num<-as.integer(paste(impaired$friend_count))
+impaired$days_since_confirmed<-as.integer(paste(impaired$days_since_confirmed))
+
+fb_sample$friend_count_num<-as.integer(paste(fb_sample$friend_count))
+fb_sample$days_since_confirmed<-as.integer(paste(fb_sample$days_since_confirmed))
+
+ios_sample$friend_count_num<-as.integer(paste(ios_sample$friend_count))
+ios_sample$days_since_confirmed<-as.integer(paste(ios_sample$days_since_confirmed))
+
+# estimate (friend_count ~ months_since_confirmed)
+library(plyr)
+
+impaired_stats<-ddply(impaired[!is.na(impaired$friend_count_num),], .(platform=platform_type, months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+impaired_stats
+
+fb_stats<-ddply(fb_sample[!is.na(fb_sample$friend_count_num),], .(months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+fb_stats$platform=rep("FB random sample",dim(fb_stats)[1])
+fb_stats
+
+ios_stats<-ddply(ios_sample[!is.na(fb_sample$friend_count_num),], .(months_since_confirmed=floor(days_since_confirmed/30)), summarize, mean=mean(friend_count_num), sd=sd(friend_count_num), median=median(friend_count_num))
+ios_stats$platform=rep("FB for iOS user random sample",dim(ios_stats)[1])
+ios_stats
+
+library(ggplot2)
+```
+
+Here we bin users by the number of months since email(or sms?) confirmation, and plot the median and mean of friend count for users in each bucket. In the second plot, we also show the standard deviation for the average friend count in each bucket.
+
+```{r fig.width=7, fig.height=6}
+ggplot(rbind(impaired_stats,fb_stats,ios_stats), aes(x=months_since_confirmed, y=median, color=platform))+geom_line()+ylab("median friend count")+xlim(0,84)+ylim(0,1000)
+
+```
+
+```{r fig.width=7, fig.height=6}
+ggplot(rbind(impaired_stats,fb_stats,ios_stats), aes(x=months_since_confirmed, y=mean, color=platform))+ylab("avg. friend count")+geom_errorbar(aes(ymin=mean-sd,ymax=mean+sd),width=.1)+geom_line()+geom_point()+ylim(-500,1500)+xlim(0,84)                                                                                                                                                                                                                    
+
+```
+
+So, contradict to our hypothesis, it seems that vision-impaired users do not have smaller social networks, as comparing to sighted users. In fact, when looking at the median friend_count as function of facebookage, vision-impaired users seem to have more friends than sighted users, at least for those who are relatively new to facebook.
+
+Now let's look at the density of ego graph for vision-impaired users and sighted users.
+
+```{r}
+### Load egograph_stats
+impaired_ego<-read.delim("20130515_blind_user_egograph_stats.tsv",header=FALSE, sep="\t", col.names=c("userid","platform_type","accessibility_tech","source","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"),fill=TRUE,quote='',comment='')
+
+fb_ego<-read.delim("20130515_1M_fb_user_egograph_stats.tsv",header=FALSE, sep="\t", col.names=c("userid","platform_type","accessibility_tech","source","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"),fill=TRUE,quote='',comment='')
+
+ios_ego<-read.delim("20130515_sample_ios_user_egograph_stats.tsv",header=FALSE, sep="\t", col.names=c("userid","platform_type","accessibility_tech","source","nodes","edges","local_bridges","triangles","connected_components","isolated_nodes","approx_communities","non_communitized_nodes"),fill=TRUE,quote='',comment='')
+
+### Calculate various network density metrics
+impaired_ego$cluster_coefficient<-impaired_ego$edges/(impaired_ego$nodes*(impaired_ego$nodes-1)/2)
+impaired_ego$triangle_density<-impaired_ego$triangles/(impaired_ego$nodes*(impaired_ego$nodes-1)*(impaired_ego$nodes-2)/6)
+
+fb_ego$cluster_coefficient<-fb_ego$edges/(fb_ego$nodes*(fb_ego$nodes-1)/2)
+fb_ego$triangle_density<-fb_ego$triangles/(fb_ego$nodes*(fb_ego$nodes-1)*(fb_ego$nodes-2)/6)
+
+```
+
+```{r fig.width=7, fig.height=6}
+plot(ecdf(impaired_ego$cluster_coefficient))
+plot(ecdf(fb_ego$cluster_coefficient), add=TRUE, col="red")
+```
+
+Do vision-impaired users more likely to friend with other vision impaired users?

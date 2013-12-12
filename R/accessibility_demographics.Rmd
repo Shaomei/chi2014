@@ -1,0 +1,38 @@
+Accessibility Users: demographics
+
+========================================================
+
+{{Here we load 160K VI users (detected by VoiceOver or ChromeVox) who logged in to Facebook between 2013-07-01 to 2013-7-15. Compare them with 1M random sampled FB users, and 200K random sampled FB iOS users, both active at the same period.}}
+
+First we want to make sure the VI users we detect are *real* VI users, not just somebody who accidentally cliked and opened screen reader function in their devices. The easy way to do that is the set a threshold $\tau$, and to only include somebody in the sample of VI users if he or she accessed Facebook through accessibility technologies for at least $\tau$ days in a month. The bigger $\tau$ is, the more confident we are about our VI user sample, but also the smaller sample we have. We will use a CDF for the number of days in a month that a user used accessibility technology to help us pick the righ $\tau$.
+
+```{r}
+# hive query for getting the data
+# select accessibility_tech, at_l30, count(distinct userid) as user_count from tmp_shaomei_at_user_atl30 group by accessibility_tech, at_l30;
+setwd("/Users/shaomei/accessibility")
+acce_histo<-read.delim("at_user_atl30_histo.tsv",header=FALSE,sep="\t",col.names=c("tech","atl30","user_cnt"))
+```
+
+```{r fig.width=7, fig.height=6}
+plot(acce_histo[acce_histo$tech=='chromevox',]$atl30,cumsum(acce_histo[acce_histo$tech=='chromevox',]$user_cnt), type="o",col="green")
+plot(acce_histo[acce_histo$tech=='high_contrast_mode',]$atl30,cumsum(acce_histo[acce_histo$tech=='high_contrast_mode',]$user_cnt), type="o",col="red")
+plot(acce_histo[acce_histo$tech=='voice_over',]$atl30,cumsum(acce_histo[acce_histo$tech=='voice_over',]$user_cnt), type="o",col="blue")
+
+```
+So let's set $\tau=3$.
+
+When we sample FB users and FB iOS users during the same period, we sample the people with at least the same level of activity (log in for at least 3 days in a month).
+
+
+* need to do this among all at_daily_dau, not only the
+Among voice_over users, what proportion of them only access through iphone, mac, or ipad?
+
+Among high_contrast_mode users, what proportion of them access through mac, windows, and other?
+
+
+You can also embed plots, for example:
+
+```{r fig.width=7, fig.height=6}
+plot(cars)
+```
+
